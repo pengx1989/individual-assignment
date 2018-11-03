@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="utf-8">
+    <title>Hangman</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+	
+
+</head>
+<body>
+    <button onclick="mainApp.logOut()">logOut</button>
+<div class="container">
+
+    <section class="header">
+        <h1 class = "gametitle">Hangman Game</h1>        
+		<div id="userGues"></div>
+		<p>Definition: 
+			<span class="hint" id="hint"></span>
+		</p>
+    </section>
+    <div class="keyboard">
+        <div class="row">
+        <div class="twelve columns">
+        <button class="keyboard-key" id="key-A">A</button>
+        <button class="keyboard-key" id="key-B">B</button>
+        <button class="keyboard-key" id="key-C">C</button>
+        <button class="keyboard-key" id="key-D">D</button>
+        <button class="keyboard-key" id="key-E">E</button>
+        <button class="keyboard-key" id="key-F">F</button>
+        <button class="keyboard-key" id="key-G">G</button>
+        <button class="keyboard-key" id="key-H">H</button>
+        <button class="keyboard-key" id="key-I">I</button>
+        <button class="keyboard-key" id="key-J">J</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <button class="keyboard-key" id="key-K">K</button>
+            <button class="keyboard-key" id="key-L">L</button>
+            <button class="keyboard-key" id="key-M">M</button>
+            <button class="keyboard-key" id="key-N">N</button>
+            <button class="keyboard-key" id="key-O">O</button>
+            <button class="keyboard-key" id="key-P">P</button>
+            <button class="keyboard-key" id="key-Q">Q</button>
+            <button class="keyboard-key" id="key-R">R</button>
+            <button class="keyboard-key" id="key-S">S</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="twelve columns">
+            <button class="keyboard-key" id="key-T">T</button>
+            <button class="keyboard-key" id="key-U">U</button>
+            <button class="keyboard-key" id="key-V">V</button>
+            <button class="keyboard-key" id="key-W">W</button>
+            <button class="keyboard-key" id="key-X">X</button>
+            <button class="keyboard-key" id="key-Y">Y</button>
+            <button class="keyboard-key" id="key-Z">Z</button>
+        </div>
+    </div>
+	
+	
+	<div class="restart-button">
+			<button class="restart" id="key-restart" onclick = "restart()">RESTART</button>
+	</div>
+	
+	<div class="reset-button">
+			<button class="reset" id="key-reset" onclick = "reset()">RESET</button>
+	</div>
+	</div>
+
+	<section class="stats">
+      <p> Score:
+        <span id="score"> 0 </span></p>
+      <p> Lives:
+        <span id="lives"> 7 </span></p>
+    </section>
+	<div class="message">
+		<p id="text"></p>
+	</div>
+
+</div>
+<script src="fireBase.js"></script>
+<script src="main.js"></script>
+<script src="model/word.js"></script>
+<script src="model/game.js"></script>
+<script src="view/view.js"></script>
+<script src="controller/keyboard.js"></script>
+</body>
+</html>
