@@ -7,19 +7,18 @@ var computerGuessHint;
 var lettersLeft;
 var length;
 
-
 //read data from firebase
 function readData(callback) {
 	firebase.database().ref('/dic/').once('value').then(function(snapshot) {
 		word = snapshot.val();
-		console.log(word);
+		//console.log(word);
 		computerGuess = word[Math.floor(Math.random() * word.length)];
 		computerGuessWord = computerGuess.name;
 		computerGuessHint = computerGuess.def;
 		lettersLeft = computerGuess.name.length;
 		length = computerGuess.name.length;		
-		console.log(computerGuess.name);
-		console.log(computerGuess.def);
+		//console.log(computerGuess.name);
+		//console.log(computerGuess.def);
 		callback();
 	});
 
@@ -34,6 +33,7 @@ var isWin = false;
 var livesLeft = 7;
 var score = 0;
 var blankSpaces = [];
+var wordLeft = 3;
 
 
 //Check the user input letter wheather are correct
@@ -57,9 +57,9 @@ function checkGame () {
 	if (lettersLeft < length) {
 		length = lettersLeft;
 		if (lettersLeft == 0) {
-		$(".keyboard-key").prop('disabled', true);
-		$(".reset").prop('disabled', true);
-		WinMessage();
+			wordLeft--;
+			console.log(wordLeft);
+			DisplayNextWord();
 		}
 	} else {
 		score--;
@@ -98,7 +98,7 @@ $(document).ready(function(){
 		blank(computerGuess.name);
 		updateMe();
 	});
-	
+	GameMessage();
 });
 
 //Disable the function of clicking keyboard
@@ -106,6 +106,31 @@ function DisableKeyboard() {
 	$(this).prop('disabled', true);
 }
 
+//Display next word
+function DisplayNextWord() {
+	if (wordLeft == 0) {
+		$(".keyboard-key").prop('disabled', true);
+		$(".reset").prop('disabled', true);
+		WinMessage();
+	} else if(wordLeft == 2) {
+		readData(function(){
+			blank(computerGuess.name);
+			updateMe();
+			$(".keyboard-key").prop('disabled', false);
+			$(".keyboard-key").css('opacity','1');
+			GameMessage1();
+		});
+	} 
+	else {
+		readData(function(){
+			blank(computerGuess.name);
+			updateMe();
+			$(".keyboard-key").prop('disabled', false);
+			$(".keyboard-key").css('opacity','1');
+			GameMessage2();
+		});
+	}
+}
 
 
 

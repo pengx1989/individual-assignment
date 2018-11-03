@@ -19,6 +19,22 @@ function blank(x) {
 	}
 }
 
+//Display game instraction
+function GameMessage() {
+	$(".message").text("Please guess three words in this game!");
+}
+
+//Display one word right
+function GameMessage1() {
+	$(".message").text("You have guessed one word right!");
+}
+
+//Display two word right
+function GameMessage2() {
+	$(".message").text("You have guessed two word right!");
+}
+
+
 //Display win message
 function WinMessage() {
 	$(".message").text("Congratulation, you win! Press restart button to start new game!");
