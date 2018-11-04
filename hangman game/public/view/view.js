@@ -19,6 +19,42 @@ function blank(x) {
 	}
 }
 
+//Display rank score
+function rankScore() {
+	$(".rank").prop('disabled', true);
+	readData2(function() {
+		displayRank();
+		console.log(rankValue);
+	});
+	
+}
+
+//Display rank score
+function displayRank() {
+	rankTitle();
+	$('.ranking').append('<ol class="rank_list">');
+	for (let i = 0; i < rankValue.length; ++i) {
+		let ranking = $('<li>'+rankValue[i][1].name+'&nbsp&nbsp&nbsp&nbsp&nbsp'+rankValue[i][1].value+'</li>');
+		$('.rank_list').append(ranking);
+	}
+	$('.ranking').append('</ol');
+	$('.ranking').append('<button class = "closeRank" onclick="closeRank()">Close Ranking</button>');
+
+}
+
+//Close Rank section
+function closeRank() {
+	$(".rankT").text("");
+	$(".rank_list").text("");
+	$(".ranking").text("");
+	$(".rank").prop('disabled', false);
+}
+
+//Display ranking title
+function rankTitle() {
+	$('.ranking').append('<h3 class = "rankT">Score Ranking</h3>');
+}
+
 //Display game instraction
 function GameMessage() {
 	$(".message").text("Please guess three words in this game!");

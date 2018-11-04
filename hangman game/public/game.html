@@ -11,7 +11,14 @@
 
 </head>
 <body>
-    <button onclick="mainApp.logOut()">logOut</button>
+    <div class = "logout" >
+        <button id="key-logout" onclick="mainApp.logOut()">Logout</button>
+
+
+    </div>
+    
+    <div class="ranking">
+    </div>
 <div class="container">
 
     <section class="header">
@@ -69,7 +76,7 @@
 	</div>
 	
 	<div class="reset-button">
-			<button class="reset" id="key-reset" onclick = "reset()">RESET</button>
+			<button class="rank" id="key-rank" onclick = "rankScore()">RANKING</button>
 	</div>
 	</div>
 
@@ -84,10 +91,10 @@
 	</div>
 
 </div>
-<script src="fireBase.js"></script>
-<script src="main.js"></script>
+<script src="controller/fireBase.js"></script>
+<script src="controller/main.js"></script>
 <script src="model/game.js"></script>
 <script src="view/view.js"></script>
-<script src="controller/keyboard.js"></script>
+<script src="controller/controller.js"></script>
 </body>
 </html>

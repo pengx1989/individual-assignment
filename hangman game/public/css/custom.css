@@ -1,7 +1,11 @@
-/*
-* Custom CSS stylesheet for TalkingAlphabet's elements
-* By Aaron Gaba
-*/
+.ranking {
+	float:right;
+	width: 200px;
+}
+
+h3 {
+	width: 180px;
+}
 
 .stats {
 	font-size: 30px;
@@ -11,8 +15,15 @@
 	margin-top:5%;
 }
 
-.reset {
+.rank {
 	text-align:center;
+}
+
+#key-logout {
+	background-color: #0DFF63;
+	border-color: #000;
+	font-size: 15px;
+	margin-top:2%;
 }
 
 #key-restart {
@@ -22,7 +33,7 @@
 	margin-top:5%;
 }
 
-#key-reset {
+#key-rank {
 	background-color: #FFF101;
 	border-color: #000;
 	font-size: 20px;

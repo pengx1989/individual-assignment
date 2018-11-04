@@ -6,6 +6,14 @@ var computerGuessWord;
 var computerGuessHint;
 var lettersLeft;
 var length;
+var rank = [];
+var isWin = false;
+var livesLeft = 7;
+var score = 0;
+var blankSpaces = [];
+var wordLeft = 3;
+var userName;
+var rankPosition = [];
 
 //read data from firebase
 function readData(callback) {
@@ -19,77 +27,53 @@ function readData(callback) {
 		length = computerGuess.name.length;		
 		//console.log(computerGuess.name);
 		//console.log(computerGuess.def);
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				userName = user.displayName;
+				//console.log(userName);
+			} else {
+			  // No user is signed in.
+			}
+		  });
 		callback();
 	});
 
 }
 
-//var computerGuess = charactersList[Math.floor(Math.random() * charactersList.length)];
-//var computerGuessWord = computerGuess.name;
-//var computerGuessHint = computerGuess.hint;
-//var lettersLeft = computerGuess.name.length;
-//var length = computerGuess.name.length;
-var isWin = false;
-var livesLeft = 7;
-var score = 0;
-var blankSpaces = [];
-var wordLeft = 3;
-
-
-//Check the user input letter wheather are correct
-//If yes, socre increase one, otherwise the score decrease one.
-function letterChecker(answer, playerGuess) {
-	let wordArr = answer.split("");
-	
-	for (var i = 0; i < wordArr.length; i++) {
-		if (playerGuess === wordArr[i]) {
-			blankSpaces[i] = playerGuess;
-			lettersLeft--;
-			score++;
-		}			
-	}
-	checkGame();
-	updateMe();	
-}
-
-//Check the lives and letter left of word, and show corresping win or lose message.
-function checkGame () {
-	if (lettersLeft < length) {
-		length = lettersLeft;
-		if (lettersLeft == 0) {
-			wordLeft--;
-			console.log(wordLeft);
-			DisplayNextWord();
+//Get and sort score from firebase
+function readData2(callback) {
+	firebase.database().ref('/rank/').once('value').then(function(snapshot) {
+		rank = snapshot.val();
+		rankValue = Object.keys(rank).map(function(k) {
+			return [Number(k), rank[k]];
+		});
+		for (let i=(rankValue.length-1); i>=0; i--) {
+			for (let j = 1; j <= i; j++) {
+				if(rankValue[j-1][1].value < rankValue[j][1].value) {
+					let temp = rankValue[j-1][1].value;
+					let temp1 = rankValue[j-1][1].name;
+					rankValue[j-1][1].value = rankValue[j][1].value;
+					rankValue[j-1][1].name = rankValue[j][1].name;
+					rankValue[j][1].value = temp;
+					rankValue[j][1].name = temp1;
+				} 
+			}
 		}
-	} else {
-		score--;
-		livesLeft--;
-		if (livesLeft <= 0) {
-		$(".keyboard-key").prop('disabled', true);
-		LoseMessage();
-		}
-	}
+		callback();
+	});
 }
 
 
-//Restart the new game
-function restart() {
-  location.reload();
-}
 
-function reset() {
-	if (lettersLeft == 0) {
-		$(".reset").prop('disabled', true);
+
+//Add score into firebase
+function addScore() {
+	var ref = database.ref('rank');
+	var data = {
+		name: userName,
+		value: score
 	}
-	
-	else {
-		clearlives();
-		$(".reset").prop('disabled', true);
-		$(".keyboard-key").prop('disabled', false);
-		$(".keyboard-key").css('opacity','1');
-	}
-	clearmessage();
-	
+	ref.push(data);
 }
 
 //Load the game when open the html file
@@ -101,36 +85,9 @@ $(document).ready(function(){
 	GameMessage();
 });
 
-//Disable the function of clicking keyboard
-function DisableKeyboard() {
-	$(this).prop('disabled', true);
-}
 
-//Display next word
-function DisplayNextWord() {
-	if (wordLeft == 0) {
-		$(".keyboard-key").prop('disabled', true);
-		$(".reset").prop('disabled', true);
-		WinMessage();
-	} else if(wordLeft == 2) {
-		readData(function(){
-			blank(computerGuess.name);
-			updateMe();
-			$(".keyboard-key").prop('disabled', false);
-			$(".keyboard-key").css('opacity','1');
-			GameMessage1();
-		});
-	} 
-	else {
-		readData(function(){
-			blank(computerGuess.name);
-			updateMe();
-			$(".keyboard-key").prop('disabled', false);
-			$(".keyboard-key").css('opacity','1');
-			GameMessage2();
-		});
-	}
-}
+
+
 
 
 
